@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
+const { server } = require("../../frontend/src/server");
 
 // create user
 router.post("/create-user", async (req, res, next) => {
@@ -112,7 +113,7 @@ router.post(
       const user = await User.findOne({ email }).select("+password");
 
       if (!user) {
-        return next(new ErrorHandler("User doesn't exists!", 400));
+        return next(new ErrorHandler("User doesn't exist!", 400));
       }
 
       const isPasswordValid = await user.comparePassword(password);
@@ -130,6 +131,112 @@ router.post(
   })
 );
 
+
+// Forgot Password
+router.post(
+  "/forgot-password",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { email } = req.body;
+
+      // 1) Check if user exists
+      const user = await User.findOne({ email });
+      if (!user) {
+        return next(new ErrorHandler("User with this email does not exist", 400));
+      }
+
+      // 2) Generate reset token
+      const resetToken = user.getResetPasswordToken();
+      await user.save({ validateBeforeSave: false });
+
+      // 3) Make reset URL
+      // const resetUrl = `${req.protocol}://${req.get(
+      //   "host"
+      // )}/reset-password/${resetToken}`;
+       const resetUrl =`http://localhost:3000/reset-password/${resetToken}`;
+
+      // 4) Email ka message
+      const message = `You requested a password reset.\n\nPlease click on the link to reset your password:\n${resetUrl}\n\nIf you didn't request this, please ignore.`;
+
+      try {
+        // 5) Send email
+        await sendMail({
+          email: user.email,
+          subject: "Password Recovery",
+          message,
+        });
+
+        res.status(200).json({
+          success: true,
+          message: `Email sent to ${user.email} successfully`,
+        });
+      } catch (err) {
+        // agr email send fail ho jaye to token remove krdo
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        await user.save({ validateBeforeSave: false });
+
+        return next(new ErrorHandler(err.message, 500));
+      }
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+
+// Reset Password
+router.put(
+  "/reset-password/:token",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { token } = req.params;
+      const { password } = req.body;
+
+      // 1) Hash token because we stored hashed token in DB
+      const crypto = require("crypto");
+      const resetPasswordToken = crypto
+        .createHash("sha256")
+        .update(token)
+        .digest("hex");
+
+        console.log("Received token:", token);
+        console.log("Hashed token to search:", resetPasswordToken);
+
+      // 2) Find user with this token and check expiry
+      const user = await User.findOne({
+        resetPasswordToken,
+        resetPasswordTime: { $gt: Date.now() },
+      });
+
+      console.log("User found:", user);
+
+      if (!user) {
+        return next(new ErrorHandler("Reset Password Token is invalid or has expired", 400));
+      }
+
+      // 3) Set the new password
+      user.password = password;
+
+      // 4) Remove token fields
+      user.resetPasswordToken = undefined;
+      user.resetPasswordTime = undefined;
+
+      // 5) Save user
+      await user.save();
+
+      // 6) Optionally login the user again or just send success
+      res.status(200).json({
+        success: true,
+        message: "Password has been reset successfully",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+
 // load user
 router.get(
   "/getuser",
@@ -139,7 +246,7 @@ router.get(
       const user = await User.findById(req.user.id);
 
       if (!user) {
-        return next(new ErrorHandler("User doesn't exists", 400));
+        return next(new ErrorHandler("User doesn't exist", 400));
       }
 
       res.status(200).json({
@@ -383,7 +490,7 @@ router.get(
   })
 );
 
-// delete users --- admin
+// delete user --- admin
 router.delete(
   "/delete-user/:id",
   isAuthenticated,

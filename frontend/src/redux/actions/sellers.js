@@ -65,13 +65,26 @@ export const getAllSellers = () => async (dispatch) => {
   }
 };
 
-// load seller
+// // load seller
+// export const loadSeller = () => async (dispatch) => {
+//   try {
+//     dispatch(loadSellerRequest());
+//     const { data } = await axios.get(`${server}/shop/getSeller`, {
+//       withCredentials: true,
+//     });
+//     dispatch(loadSellerSuccess(data.seller));
+//   } catch (error) {
+//     dispatch(loadSellerFail(error.response.data.message));
+//   }
+// };
+
+//load seller
 export const loadSeller = () => async (dispatch) => {
   try {
+    const hasSellerToken = document.cookie.includes("seller_token=");
+    if (!hasSellerToken) return;
     dispatch(loadSellerRequest());
-    const { data } = await axios.get(`${server}/shop/getSeller`, {
-      withCredentials: true,
-    });
+    const { data } = await axios.get(`${server}/shop/getSeller`, { withCredentials: true });
     dispatch(loadSellerSuccess(data.seller));
   } catch (error) {
     dispatch(loadSellerFail(error.response.data.message));

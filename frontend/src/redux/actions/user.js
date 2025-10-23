@@ -174,6 +174,12 @@
 import axios from "axios";
 import { server } from "../../server";
 import {
+  forgotPasswordRequest,
+  forgotPasswordSuccess,
+  forgotPasswordFail,
+  resetPasswordRequest,
+  resetPasswordSuccess,
+  resetPasswordFail,
   loadUserRequest,
   loadUserSuccess,
   loadUserFail,
@@ -191,6 +197,46 @@ import {
   getAllUsersFailed,
 } from "../constants/userConstants";
 
+
+//forgot password
+export const forgotPassword = (email) => async (dispatch) => {
+  try {
+    dispatch(forgotPasswordRequest());
+
+    const { data } = await axios.post(
+      `${server}/user/forgot-password`,
+      { email },
+      { withCredentials: true }
+    );
+
+    dispatch(forgotPasswordSuccess(data.message));
+  } catch (error) {
+    dispatch(
+      forgotPasswordFail(error.response?.data?.message || "Something went wrong")
+    );
+  }
+};
+
+// Reset Password
+export const resetPassword = (token, password) => async (dispatch) => {
+  try {
+    dispatch(resetPasswordRequest());
+
+    const { data } = await axios.put(
+      `${server}/user/reset-password/${token}`,
+      { password },
+      { withCredentials: true }
+    );
+
+    dispatch(resetPasswordSuccess(data.message));
+  } catch (error) {
+    dispatch(
+      resetPasswordFail(error.response?.data?.message || "Something went wrong")
+    );
+  }
+};
+
+
 // load user
 export const loadUser = () => async (dispatch) => {
   try {
@@ -200,22 +246,14 @@ export const loadUser = () => async (dispatch) => {
     });
     dispatch(loadUserSuccess(data.user));
   } catch (error) {
-    dispatch(loadUserFail(error.response.data.message));
+    // if user is not logged in (401 Unauthorized), just fail silently — no toast
+    if (error.response && error.response.status === 401) {
+      dispatch(loadUserFail(null)); // no message to avoid toast
+    } else {
+      dispatch(loadUserFail(error.response?.data?.message || "Something went wrong"));
+    }
   }
 };
-
-// // load seller
-// export const loadSeller = () => async (dispatch) => {
-//   try {
-//     dispatch(loadSellerRequest());
-//     const { data } = await axios.get(`${server}/shop/getSeller`, {
-//       withCredentials: true,
-//     });
-//     dispatch(loadSellerSuccess(data.seller));
-//   } catch (error) {
-//     dispatch(loadSellerFail(error.response.data.message));
-//   }
-// };
 
 // update user information
 export const updateUserInformation =

@@ -90,6 +90,12 @@
 
 import { createReducer } from "@reduxjs/toolkit";
 import {
+  forgotPasswordRequest,
+  forgotPasswordSuccess,
+  forgotPasswordFail,
+  resetPasswordRequest,
+  resetPasswordSuccess,
+  resetPasswordFail,
   loadUserRequest,
   loadUserSuccess,
   loadUserFail,
@@ -112,8 +118,40 @@ import {
 const initialState = {
   isAuthenticated: false,
 };
-
 export const userReducer = createReducer(initialState, (builder) => {
+ //Forgot Password
+    builder
+    .addCase(forgotPasswordRequest, (state) => {
+      state.loading = true;
+      state.error = null;
+      state.successMessage = null;
+    })
+    .addCase(forgotPasswordSuccess, (state, action) => {
+      state.loading = false;
+      state.successMessage = action.payload; // server ka message
+    })
+    .addCase(forgotPasswordFail, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    // Reset Password
+builder
+  .addCase(resetPasswordRequest, (state) => {
+    state.loading = true;
+    state.error = null;
+    state.successMessage = null;
+  })
+  .addCase(resetPasswordSuccess, (state, action) => {
+    state.loading = false;
+    state.successMessage = action.payload;
+  })
+  .addCase(resetPasswordFail, (state, action) => {
+    state.loading = false;
+    state.error = action.payload;
+  });
+
+
   // Load User
   builder
     .addCase(loadUserRequest, (state) => {

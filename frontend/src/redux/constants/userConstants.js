@@ -1,5 +1,15 @@
 import { createAction } from "@reduxjs/toolkit";
 
+//Forgot Password
+export const forgotPasswordRequest = createAction("forgotPasswordRequest");
+export const forgotPasswordSuccess = createAction("forgotPasswordSuccess");
+export const forgotPasswordFail = createAction("forgotPasswordFail");
+
+//Reset Password
+export const resetPasswordRequest = createAction("resetPasswordRequest");
+export const resetPasswordSuccess = createAction("resetPasswordSuccess");
+export const resetPasswordFail = createAction("resetPasswordFail");
+
 // Load User
 export const loadUserRequest = createAction("loadUserRequest");
 export const loadUserSuccess = createAction("loadUserSuccess");

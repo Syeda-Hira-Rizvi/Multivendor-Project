@@ -35,7 +35,7 @@ const AdminDashboardMain = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
+        return params.row.status === "Delivered"
           ? "greenColor"
           : "redColor";
       },
@@ -139,14 +139,17 @@ const AdminDashboardMain = () => {
         <br />
         <h3 className="text-[22px] font-Poppins pb-2">Latest Orders</h3>
         <div className="w-full min-h-[45vh] bg-white rounded">
-          <DataGrid
-            rows={row}
-            columns={columns}
-            pageSize={4}
-            disableSelectionOnClick
-            autoHeight
-          />
-        </div>
+  <div style={{ width: "100%", height: "100%" }}>
+    <DataGrid
+      rows={row}
+      columns={columns}
+      pageSize={4}
+      disableSelectionOnClick
+      autoHeight
+    />
+  </div>
+</div>
+
       </div>
       )
     }
