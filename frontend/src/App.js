@@ -75,6 +75,10 @@ const App = () => {
   useEffect(() => {
     Store.dispatch(loadUser());
     Store.dispatch(loadSeller());
+     const role = localStorage.getItem("userRole"); // ya state.user.role se
+  if (role === "Seller") {
+    Store.dispatch(loadSeller());
+  }
     Store.dispatch(getAllProducts());
     Store.dispatch(getAllEvents());
     getStripeApikey();

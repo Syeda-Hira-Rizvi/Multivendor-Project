@@ -5,15 +5,30 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { server } from "../../server";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { loadSeller } from "../../redux/actions/sellers";
 
 const ShopLogin = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validations
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        toast.error("Enter a valid email address");
+        return;
+      }
+
+    // if (!password || password.length < 8) {
+    //     toast.error("Password must be at least 8 characters");
+    //     return;
+    //   }
 
     await axios
       .post(
@@ -33,6 +48,32 @@ const ShopLogin = () => {
         toast.error(err.response.data.message);
       });
   };
+
+//   const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   try {
+//     const res = await axios.post(
+//       `${server}/shop/login-shop`,
+//       { email, password },
+//       { withCredentials: true }
+//     );
+
+//     toast.success("Login Success!");
+
+//     // ✅ load seller data first
+//     const result = await dispatch(loadSeller());
+
+//     if (result && result.type === "loadSellerSuccess") {
+//       navigate("/dashboard");
+//     } else {
+//       toast.error("Failed to load seller. Please refresh and try again.");
+//     }
+//   } catch (err) {
+//     toast.error(err.response?.data?.message || "Login failed");
+//   }
+// };
+
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">

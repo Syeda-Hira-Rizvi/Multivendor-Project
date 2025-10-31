@@ -15,6 +15,18 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    //Validations
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            toast.error("Enter a valid email address");
+            return;
+          }
+    
+        // if (!password || password.length < 8) {
+        //     toast.error("Password must be at least 8 characters");
+        //     return;
+        //   }
+
     await axios
       .post(
         `${server}/user/login-user`,

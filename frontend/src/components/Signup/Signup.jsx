@@ -29,6 +29,23 @@ const Singup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+      // Validations
+  if (name.trim().length < 3) {
+    toast.error("Name must be at least 3 characters long");
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    toast.error("Please enter a valid email address");
+    return;
+  }
+
+  if (password.length < 8) {
+    toast.error("Password must be at least 8 characters long");
+    return;
+  }
+
     axios
       .post(`${server}/user/create-user`, { name, email, password, avatar })
       .then((res) => {
@@ -36,7 +53,7 @@ const Singup = () => {
         setName("");
         setEmail("");
         setPassword("");
-        setAvatar();
+        setAvatar(null);
       })
       .catch((error) => {
         toast.error(error.response.data.message);

@@ -10,15 +10,48 @@ import { RxAvatar } from "react-icons/rx";
 const ShopCreate = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState();
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
-  const [zipCode, setZipCode] = useState();
-  const [avatar, setAvatar] = useState();
+  const [zipCode, setZipCode] = useState("");
+  const [avatar, setAvatar] = useState(null);
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    
+  // Validations
+  if (!name || name.trim().length < 3) {
+    toast.error("Shop name must be at least 3 characters");
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    toast.error("Enter a valid email address");
+    return;
+  }
+
+  if (!phoneNumber || phoneNumber.toString().length < 10 || phoneNumber.toString().length > 13) {
+    toast.error("Phone number must be 10 to 13 digits");
+    return;
+  }
+
+  if (!address || address.trim().length < 5) {
+    toast.error("Address must be at least 5 characters");
+    return;
+  }
+
+  if (!zipCode || zipCode.toString().length < 4 || zipCode.toString().length > 6) {
+    toast.error("Zip code must be 4 to 6 digits");
+    return;
+  }
+
+  if (!password || password.length < 8) {
+    toast.error("Password must be at least 8 characters");
+    return;
+  }
 
     axios
       .post(`${server}/shop/create-shop`, {
@@ -35,10 +68,10 @@ const ShopCreate = () => {
         setName("");
         setEmail("");
         setPassword("");
-        setAvatar();
-        setZipCode();
+        setAvatar(null);
+        setZipCode("");
         setAddress("");
-        setPhoneNumber();
+        setPhoneNumber("");
       })
       .catch((error) => {
         toast.error(error.response.data.message);

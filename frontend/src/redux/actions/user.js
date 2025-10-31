@@ -255,6 +255,21 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
+// // load user
+// export const loadUser = () => async (dispatch) => {
+//   try {
+//     const hasUserToken = document.cookie.includes("token=");
+//     if (!hasUserToken) return; // this line is added
+
+//     dispatch(loadUserRequest());
+//     const { data } = await axios.get(`${server}/user/getuser`, { withCredentials: true });
+//     dispatch(loadUserSuccess(data.user));
+//   } catch (error) {
+//     dispatch(loadUserFail(error.response?.data?.message || "Failed to load user"));
+//   }
+// };
+
+
 // update user information
 export const updateUserInformation =
   (name, email, phoneNumber, password) => async (dispatch) => {

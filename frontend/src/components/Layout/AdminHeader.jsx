@@ -21,11 +21,12 @@ const AdminHeader = () => {
       </div>
       <div className="flex items-center">
         <div className="flex items-center mr-4">
-          <Link to="/dashboard/cupouns" className="800px:block hidden">
+          <Link to="/dashboard-coupouns" className="800px:block hidden">
             <AiOutlineGift
               color="#555"
               size={30}
               className="mx-5 cursor-pointer"
+              title="Coupouns"
             />
           </Link>
           <Link to="/dashboard-events" className="800px:block hidden">
@@ -33,6 +34,7 @@ const AdminHeader = () => {
               color="#555"
               size={30}
               className="mx-5 cursor-pointer"
+              title="Events"
             />
           </Link>
           <Link to="/dashboard-products" className="800px:block hidden">
@@ -40,6 +42,7 @@ const AdminHeader = () => {
               color="#555"
               size={30}
               className="mx-5 cursor-pointer"
+              title="Products"
             />
           </Link>
           <Link to="/dashboard-orders" className="800px:block hidden">
@@ -50,12 +53,14 @@ const AdminHeader = () => {
               color="#555"
               size={30}
               className="mx-5 cursor-pointer"
+              title="Messages"
             />
           </Link>
             <img
               src={`${user?.avatar?.url}`}
               alt=""
               className="w-[50px] h-[50px] rounded-full object-cover"
+              title="Profile"
             />
         </div>
       </div>
