@@ -48,6 +48,12 @@
 
 import { createReducer } from "@reduxjs/toolkit";
 import {
+  shopForgotPasswordRequest,
+  shopForgotPasswordSuccess,
+  shopForgotPasswordFail,
+  shopResetPasswordRequest,
+  shopResetPasswordSuccess,
+  shopResetPasswordFail,
   loadSellerRequest,
   loadSellerSuccess,
   loadSellerFail,
@@ -63,6 +69,34 @@ const initialState = {
 
 export const sellerReducer = createReducer(initialState, (builder) => {
   builder
+    // Forgot Password
+    .addCase(shopForgotPasswordRequest, (state) => {
+      state.isLoading = true;
+      state.error = null;
+      state.successMessage = null;
+    })
+    .addCase(shopForgotPasswordSuccess, (state, action) => {
+      state.isLoading = false;
+      state.successMessage = action.payload; // server ka message
+    })
+    .addCase(shopForgotPasswordFail, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    })
+    // Reset Password
+    .addCase(shopResetPasswordRequest, (state) => {
+    state.isLoading = true;
+    state.error = null;
+    state.successMessage = null;
+  })
+  .addCase(shopResetPasswordSuccess, (state, action) => {
+    state.isLoading = false;
+    state.successMessage = action.payload;
+  })
+  .addCase(shopResetPasswordFail, (state, action) => {
+    state.isLoading = false;
+    state.error = action.payload;
+  })
     // Load Seller
     .addCase(loadSellerRequest, (state) => {
       state.isLoading = true;

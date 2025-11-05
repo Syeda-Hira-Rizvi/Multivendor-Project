@@ -100,4 +100,20 @@ shopSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
+//  Generating Password Reset Token for shops
+shopSchema.methods.getResetPasswordToken = function () {
+  const crypto = require("crypto");
+  const resetToken = crypto.randomBytes(20).toString("hex");
+
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  this.resetPasswordTime = Date.now() + 15 * 60 * 1000; // 15 minutes
+
+  return resetToken;
+};
+
+
 module.exports = mongoose.model("Shop", shopSchema);

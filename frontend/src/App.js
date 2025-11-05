@@ -23,6 +23,8 @@ import {
   OrderDetailsPage,
   TrackOrderPage,
   UserInbox,
+  ShopForgotPasswordPage,
+  ShopResetPasswordPage,
 } from "./routes/Routes.js";
 import {
   ShopDashboardPage,
@@ -64,6 +66,7 @@ import { server } from "./server";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
+
 const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
 
@@ -104,6 +107,8 @@ const App = () => {
         <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
         <Route path="/shop-create" element={<ShopCreatePage />} />
         <Route path="/shop-login" element={<ShopLoginPage />} />
+        <Route path="/shop-forgot-password" element={<ShopForgotPasswordPage />} />
+        <Route path="/shop-reset-password/:token" element={<ShopResetPasswordPage />} />
 
         {/* User Protected Routes */}
         <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />

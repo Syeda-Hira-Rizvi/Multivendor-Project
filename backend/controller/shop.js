@@ -139,6 +139,110 @@ router.post(
   })
 );
 
+// Forgot password for Shop (Seller)
+router.post(
+  "/shop-forgot-password",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { email } = req.body;
+
+      // 1) Check if Shop seller exists
+      const shop = await Shop.findOne({ email });
+      if (!shop) {
+        return next(new ErrorHandler("Seller with this email does not exist", 400));
+      }
+
+      // 2) Generate reset token
+      const resetToken = shop.getResetPasswordToken();
+      await shop.save({ validateBeforeSave: false });
+
+      // 3) Reset URL (frontend shop reset page)
+      const resetUrl = `http://localhost:3000/shop-reset-password/${resetToken}`;
+
+      // 4) Email message
+      const message = `You requested a password reset.\n\nPlease click the link below to reset your password:\n${resetUrl}\n\nIf you didn't request this, please ignore it.`;
+
+      try {
+        // 5) Send mail to seller
+        await sendMail({
+          email: shop.email,
+          subject: "Seller Password Recovery",
+          message,
+        });
+
+        res.status(200).json({
+          success: true,
+          message: `Email sent to ${shop.email} successfully`,
+        });
+      } catch (err) {
+        // If email sending fails, remove token
+        shop.resetPasswordToken = undefined;
+        shop.resetPasswordExpire = undefined;
+        await shop.save({ validateBeforeSave: false });
+
+        return next(new ErrorHandler(err.message, 500));
+      }
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+
+// Reset Password for Shop (Seller)
+router.put(
+  "/shop-reset-password/:token",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { token } = req.params;
+      const { password } = req.body;
+
+      const crypto = require("crypto");
+
+      // 1) Hash token (because DB me hashed save hai)
+      const resetPasswordToken = crypto
+        .createHash("sha256")
+        .update(token)
+        .digest("hex");
+
+      console.log("Received Seller Token:", token);
+      console.log("Hashed Seller Token:", resetPasswordToken);
+
+      // 2) Find seller by token & check expiry
+      const shop = await Shop.findOne({
+        resetPasswordToken,
+        resetPasswordTime: { $gt: Date.now() },
+      });
+
+      console.log("Shop found:", shop);
+
+      if (!shop) {
+        return next(
+          new ErrorHandler("Reset Password Token is invalid or expired", 400)
+        );
+      }
+
+      // 3) Update password
+      shop.password = password;
+
+      // 4) Clear token fields
+      shop.resetPasswordToken = undefined;
+      shop.resetPasswordTime = undefined;
+
+      // 5) Save seller
+      await shop.save();
+
+      res.status(200).json({
+        success: true,
+        message: "Seller password has been reset successfully",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+
 // load shop
 router.get(
   "/getSeller",

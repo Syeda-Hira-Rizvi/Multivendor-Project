@@ -38,6 +38,12 @@
 import axios from "axios";
 import { server } from "../../server";
 import {
+  shopForgotPasswordRequest,
+  shopForgotPasswordSuccess,
+  shopForgotPasswordFail,
+  shopResetPasswordRequest,
+  shopResetPasswordSuccess,
+  shopResetPasswordFail,
   getAllSellersRequest,
   getAllSellersSuccess,
   getAllSellersFailed,
@@ -45,6 +51,45 @@ import {
   loadSellerSuccess,
   loadSellerFail,
 } from "../constants/sellerConstants";
+
+// shop forgot password 
+export const shopForgotPassword = (email) => async (dispatch) => {
+  try {
+    dispatch(shopForgotPasswordRequest());
+
+    const { data } = await axios.post(
+      `${server}/shop/shop-forgot-password`,
+      { email },
+      { withCredentials: true }
+    );
+
+    dispatch(shopForgotPasswordSuccess(data.message));
+  } catch (error) {
+    dispatch(
+      shopForgotPasswordFail(error.response?.data?.message || "Something went wrong")
+    );
+  }
+};
+
+//shop reset password 
+export const shopResetPassword = (token, password) => async (dispatch) => {
+  try {
+    dispatch(shopResetPasswordRequest());
+
+    const { data } = await axios.put(
+      `${server}/shop/shop-reset-password/${token}`,
+      { password },
+      { withCredentials: true }
+    );
+
+    dispatch(shopResetPasswordSuccess(data.message));
+  } catch (error) {
+    dispatch(
+      shopResetPasswordFail(error.response?.data?.message || "Reset failed")
+    );
+  }
+};
+
 
 // get all sellers --- admin
 export const getAllSellers = () => async (dispatch) => {

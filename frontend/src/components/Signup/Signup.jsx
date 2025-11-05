@@ -13,6 +13,8 @@ const Singup = () => {
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [avatar, setAvatar] = useState(null);
+  const [loading, setLoading] = useState(false);
+
 
   const handleFileInputChange = (e) => {
     const reader = new FileReader();
@@ -46,19 +48,40 @@ const Singup = () => {
     return;
   }
 
-    axios
-      .post(`${server}/user/create-user`, { name, email, password, avatar })
-      .then((res) => {
-        toast.success(res.data.message);
-        setName("");
-        setEmail("");
-        setPassword("");
-        setAvatar(null);
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-      });
-  };
+  //   axios
+  //     .post(`${server}/user/create-user`, { name, email, password, avatar })
+  //     .then((res) => {
+  //       toast.success(res.data.message);
+  //       setName("");
+  //       setEmail("");
+  //       setPassword("");
+  //       setAvatar(null);
+  //     })
+  //     .catch((error) => {
+  //       toast.error(error.response.data.message);
+  //     });
+  // };
+  try {
+    setLoading(true); // ✅ Start Loading
+
+    const res = await axios.post(`${server}/user/create-user`, {
+      name,
+      email,
+      password,
+      avatar,
+    });
+
+    toast.success(res.data.message);
+    setName("");
+    setEmail("");
+    setPassword("");
+    setAvatar(null);
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Something went wrong");
+  } finally {
+    setLoading(false); // ✅ Stop Loading
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -178,12 +201,22 @@ const Singup = () => {
             </div>
 
             <div>
-              <button
+              {/* <button
                 type="submit"
                 className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
               >
                 Submit
-              </button>
+              </button> */}
+              <button
+  type="submit"
+  disabled={loading}
+  className={`group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
+    loading ? "bg-blue-300 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+  }`}
+>
+  {loading ? "Submitting..." : "Submit"}
+</button>
+
             </div>
             <div className={`${styles.noramlFlex} w-full`}>
               <h4>Already have an account?</h4>

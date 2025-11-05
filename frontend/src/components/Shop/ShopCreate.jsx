@@ -16,6 +16,8 @@ const ShopCreate = () => {
   const [avatar, setAvatar] = useState(null);
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,30 +55,58 @@ const ShopCreate = () => {
     return;
   }
 
-    axios
-      .post(`${server}/shop/create-shop`, {
-        name,
-        email,
-        password,
-        avatar,
-        zipCode,
-        address,
-        phoneNumber,
-      })
-      .then((res) => {
-        toast.success(res.data.message);
-        setName("");
-        setEmail("");
-        setPassword("");
-        setAvatar(null);
-        setZipCode("");
-        setAddress("");
-        setPhoneNumber("");
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-      });
-  };
+  //   axios
+  //     .post(`${server}/shop/create-shop`, {
+  //       name,
+  //       email,
+  //       password,
+  //       avatar,
+  //       zipCode,
+  //       address,
+  //       phoneNumber,
+  //     })
+  //     .then((res) => {
+  //       toast.success(res.data.message);
+  //       setName("");
+  //       setEmail("");
+  //       setPassword("");
+  //       setAvatar(null);
+  //       setZipCode("");
+  //       setAddress("");
+  //       setPhoneNumber("");
+  //     })
+  //     .catch((error) => {
+  //       toast.error(error.response.data.message);
+  //     });
+  // };
+
+  try {
+    setLoading(true); // ✅ start loading
+
+    const res = await axios.post(`${server}/shop/create-shop`, {
+      name,
+      email,
+      password,
+      avatar,
+      zipCode,
+      address,
+      phoneNumber,
+    });
+
+    toast.success(res.data.message);
+    setName("");
+    setEmail("");
+    setPassword("");
+    setAvatar(null);
+    setZipCode("");
+    setAddress("");
+    setPhoneNumber("");
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Something went wrong");
+  } finally {
+    setLoading(false); // ✅ stop loading
+  }
+};
 
   const handleFileInputChange = (e) => {
     const reader = new FileReader();
@@ -263,12 +293,22 @@ const ShopCreate = () => {
             </div>
 
             <div>
-              <button
+              {/* <button
                 type="submit"
                 className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
               >
                 Submit
-              </button>
+              </button> */}
+              <button
+  type="submit"
+  disabled={loading}
+  className={`group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
+    loading ? "bg-blue-300 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+  }`}
+>
+  {loading ? "Submitting..." : "Submit"}
+</button>
+
             </div>
             <div className={`${styles.noramlFlex} w-full`}>
               <h4>Already have an account?</h4>
