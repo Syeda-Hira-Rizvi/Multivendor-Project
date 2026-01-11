@@ -57,7 +57,7 @@ const ProfileContent = ({ active }) => {
         setAvatar(reader.result);
         axios
           .put(
-            `${REACT_APP_BASE_URL}/user/update-avatar`,
+            `${process.env.REACT_APP_BASE_URL}/user/update-avatar`,
             { avatar: reader.result },
             {
               withCredentials: true,
@@ -478,7 +478,7 @@ const ChangePassword = () => {
 
     await axios
       .put(
-        `${REACT_APP_BASE_URL}/user/update-user-password`,
+        `${process.env.REACT_APP_BASE_URL}/user/update-user-password`,
         { oldPassword, newPassword, confirmPassword },
         { withCredentials: true }
       )

@@ -16,7 +16,7 @@ const CountDown = ({ data }) => {
       typeof timeLeft.minutes === 'undefined' &&
       typeof timeLeft.seconds === 'undefined'
     ) {
-      axios.delete(`${REACT_APP_BASE_URL}/event/delete-shop-event/${data._id}`);
+      axios.delete(`${process.env.REACT_APP_BASE_URL}/event/delete-shop-event/${data._id}`);
     }
     return () => clearTimeout(timer);
   });

@@ -119,7 +119,7 @@ export const createevent = (data) => async (dispatch) => {
   try {
     dispatch(eventCreateRequest());
 
-    const { data: res } = await axios.post(`${REACT_APP_BASE_URL}/event/create-event`, data);
+    const { data: res } = await axios.post(`${process.env.REACT_APP_BASE_URL}/event/create-event`, data);
     dispatch(eventCreateSuccess(res.event));
   } catch (error) {
     dispatch(eventCreateFail(error.response.data.message));
@@ -131,7 +131,7 @@ export const getAllEventsShop = (id) => async (dispatch) => {
   try {
     dispatch(getAlleventsShopRequest());
 
-    const { data } = await axios.get(`${REACT_APP_BASE_URL}/event/get-all-events/${id}`);
+    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/event/get-all-events/${id}`);
     dispatch(getAlleventsShopSuccess(data.events));
   } catch (error) {
     dispatch(getAlleventsShopFailed(error.response.data.message));
@@ -144,7 +144,7 @@ export const deleteEvent = (id) => async (dispatch) => {
     dispatch(deleteeventRequest());
 
     const { data } = await axios.delete(
-      `${REACT_APP_BASE_URL}/event/delete-shop-event/${id}`,
+      `${process.env.REACT_APP_BASE_URL}/event/delete-shop-event/${id}`,
       { withCredentials: true }
     );
 
@@ -159,7 +159,7 @@ export const getAllEvents = () => async (dispatch) => {
   try {
     dispatch(getAlleventsRequest());
 
-    const { data } = await axios.get(`${REACT_APP_BASE_URL}/event/get-all-events`);
+    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/event/get-all-events`);
     dispatch(getAlleventsSuccess(data.events));
   } catch (error) {
     dispatch(getAlleventsFailed(error.response.data.message));

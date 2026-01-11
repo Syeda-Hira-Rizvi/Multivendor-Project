@@ -12,7 +12,7 @@ const ActivationPage = () => {
     if (activation_token) {
       const sendRequest = async () => {
         await axios
-          .post(`${REACT_APP_BASE_URL}/user/activation`, {
+          .post(`${process.env.REACT_APP_BASE_URL}/user/activation`, {
             activation_token,
           })
           .then((res) => {

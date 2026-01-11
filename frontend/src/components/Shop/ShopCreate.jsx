@@ -83,7 +83,7 @@ const ShopCreate = () => {
   try {
     setLoading(true); // ✅ start loading
 
-    const res = await axios.post(`${REACT_APP_BASE_URL}/shop/create-shop`, {
+    const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/shop/create-shop`, {
       name,
       email,
       password,

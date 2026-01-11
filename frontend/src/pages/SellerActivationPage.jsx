@@ -12,7 +12,7 @@ const SellerActivationPage = () => {
     if (activation_token) {
       const sendRequest = async () => {
         await axios
-          .post(`${REACT_APP_BASE_URL}/shop/activation`, {
+          .post(`${process.env.REACT_APP_BASE_URL}/shop/activation`, {
             activation_token,
           })
           .then((res) => {

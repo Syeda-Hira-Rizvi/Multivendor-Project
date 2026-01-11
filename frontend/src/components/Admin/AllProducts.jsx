@@ -15,7 +15,7 @@ const AllProducts = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get(`${REACT_APP_BASE_URL}/product/admin-all-products`, {withCredentials: true}).then((res) => {
+    axios.get(`${process.env.REACT_APP_BASE_URL}/product/admin-all-products`, {withCredentials: true}).then((res) => {
         setData(res.data.products);
     })
   }, []);

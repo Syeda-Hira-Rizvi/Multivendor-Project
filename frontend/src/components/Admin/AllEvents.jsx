@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const AllEvents = () => {
   const [events, setEvents] = useState([]);
   useEffect(() => {
-   axios.get(`${REACT_APP_BASE_URL}/event/admin-all-events`, {withCredentials: true}).then((res) =>{
+   axios.get(`${process.env.REACT_APP_BASE_URL}/event/admin-all-events`, {withCredentials: true}).then((res) =>{
     setEvents(res.data.events);
    })
   }, []);

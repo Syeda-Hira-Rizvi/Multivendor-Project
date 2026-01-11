@@ -44,7 +44,7 @@ const WithdrawMoney = () => {
 
     await axios
       .put(
-        `${REACT_APP_BASE_URL}/shop/update-payment-methods`,
+        `${process.env.REACT_APP_BASE_URL}/shop/update-payment-methods`,
         {
           withdrawMethod,
         },
@@ -69,7 +69,7 @@ const WithdrawMoney = () => {
 
   const deleteHandler = async () => {
     await axios
-      .delete(`${REACT_APP_BASE_URL}/shop/delete-withdraw-method`, {
+      .delete(`${process.env.REACT_APP_BASE_URL}/shop/delete-withdraw-method`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -89,7 +89,7 @@ const WithdrawMoney = () => {
       const amount = withdrawAmount;
       await axios
         .post(
-          `${REACT_APP_BASE_URL}/withdraw/create-withdraw-request`,
+          `${process.env.REACT_APP_BASE_URL}/withdraw/create-withdraw-request`,
           { amount },
           { withCredentials: true }
         )

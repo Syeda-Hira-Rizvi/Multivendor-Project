@@ -23,7 +23,7 @@ const AllSellers = () => {
 
   const handleDelete = async (id) => {
     await axios
-    .delete(`${REACT_APP_BASE_URL}/shop/delete-seller/${id}`, { withCredentials: true })
+    .delete(`${process.env.REACT_APP_BASE_URL}/shop/delete-seller/${id}`, { withCredentials: true })
     .then((res) => {
       toast.success(res.data.message);
     });

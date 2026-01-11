@@ -64,7 +64,7 @@ const Singup = () => {
   try {
     setLoading(true); // ✅ Start Loading
 
-    const res = await axios.post(`${REACT_APP_BASE_URL}/user/create-user`, {
+    const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/create-user`, {
       name,
       email,
       password,

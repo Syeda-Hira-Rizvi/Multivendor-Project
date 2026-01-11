@@ -32,7 +32,7 @@ const ShopLogin = () => {
 
     await axios
       .post(
-        `${REACT_APP_BASE_URL}/shop/login-shop`,
+        `${process.env.REACT_APP_BASE_URL}/shop/login-shop`,
         {
           email,
           password,

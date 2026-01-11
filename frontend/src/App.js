@@ -71,7 +71,7 @@ const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
 
   async function getStripeApikey() {
-    const { data } = await axios.get(`${REACT_APP_BASE_URL}/payment/stripeapikey`);
+    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/payment/stripeapikey`);
     setStripeApiKey(data.stripeApikey);
   }
 

@@ -186,7 +186,7 @@ export const createProduct = (productData) => async (dispatch) => {
     dispatch(productCreateRequest());
 
     const { data } = await axios.post(
-      `${REACT_APP_BASE_URL}/product/create-product`,
+      `${process.env.REACT_APP_BASE_URL}/product/create-product`,
       productData,
       { withCredentials: true }
     );
@@ -206,7 +206,7 @@ export const getAllProductsShop = (id) => async (dispatch) => {
     dispatch(getAllProductsShopRequest());
 
     const { data } = await axios.get(
-      `${REACT_APP_BASE_URL}/product/get-all-products-shop/${id}`
+      `${process.env.REACT_APP_BASE_URL}/product/get-all-products-shop/${id}`
     );
 
     dispatch(getAllProductsShopSuccess(data.products));
@@ -221,7 +221,7 @@ export const deleteProduct = (id) => async (dispatch) => {
     dispatch(deleteProductRequest());
 
     const { data } = await axios.delete(
-      `${REACT_APP_BASE_URL}/product/delete-shop-product/${id}`,
+      `${process.env.REACT_APP_BASE_URL}/product/delete-shop-product/${id}`,
       {
         withCredentials: true,
       }
@@ -238,7 +238,7 @@ export const getAllProducts = () => async (dispatch) => {
   try {
     dispatch(getAllProductsRequest());
 
-    const { data } = await axios.get(`${REACT_APP_BASE_URL}/product/get-all-products`);
+    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/product/get-all-products`);
 
     dispatch(getAllProductsSuccess(data.products));
   } catch (error) {

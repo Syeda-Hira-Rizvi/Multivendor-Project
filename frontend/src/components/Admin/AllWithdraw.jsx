@@ -16,7 +16,7 @@ const AllWithdraw = () => {
 
   useEffect(() => {
     axios
-      .get(`${REACT_APP_BASE_URL}/withdraw/get-all-withdraw-request`, {
+      .get(`${process.env.REACT_APP_BASE_URL}/withdraw/get-all-withdraw-request`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -82,7 +82,7 @@ const AllWithdraw = () => {
 
   const handleSubmit = async () => {
     await axios
-      .put(`${REACT_APP_BASE_URL}/withdraw/update-withdraw-request/${withdrawData.id}`,{
+      .put(`${process.env.REACT_APP_BASE_URL}/withdraw/update-withdraw-request/${withdrawData.id}`,{
         sellerId: withdrawData.shopId,
       },{withCredentials: true})
       .then((res) => {

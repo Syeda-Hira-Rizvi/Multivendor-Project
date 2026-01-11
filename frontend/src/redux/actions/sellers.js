@@ -58,7 +58,7 @@ export const shopForgotPassword = (email) => async (dispatch) => {
     dispatch(shopForgotPasswordRequest());
 
     const { data } = await axios.post(
-      `${REACT_APP_BASE_URL}/shop/shop-forgot-password`,
+      `${process.env.REACT_APP_BASE_URL}/shop/shop-forgot-password`,
       { email },
       { withCredentials: true }
     );
@@ -77,7 +77,7 @@ export const shopResetPassword = (token, password) => async (dispatch) => {
     dispatch(shopResetPasswordRequest());
 
     const { data } = await axios.put(
-      `${REACT_APP_BASE_URL}/shop/shop-reset-password/${token}`,
+      `${process.env.REACT_APP_BASE_URL}/shop/shop-reset-password/${token}`,
       { password },
       { withCredentials: true }
     );
@@ -96,7 +96,7 @@ export const getAllSellers = () => async (dispatch) => {
   try {
     dispatch(getAllSellersRequest());
 
-    const { data } = await axios.get(`${REACT_APP_BASE_URL}/shop/admin-all-sellers`, {
+    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/shop/admin-all-sellers`, {
       withCredentials: true,
     });
 
@@ -114,7 +114,7 @@ export const getAllSellers = () => async (dispatch) => {
 export const loadSeller = () => async (dispatch) => {
   try {
     dispatch(loadSellerRequest());
-    const { data } = await axios.get(`${REACT_APP_BASE_URL}/shop/getSeller`, {
+    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/shop/getSeller`, {
       withCredentials: true,
     });
     dispatch(loadSellerSuccess(data.seller));
