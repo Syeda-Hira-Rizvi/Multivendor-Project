@@ -172,7 +172,7 @@
 
 
 import axios from "axios";
-import { server } from "../../server";
+// import { server } from "../../server";
 import {
   forgotPasswordRequest,
   forgotPasswordSuccess,
@@ -204,7 +204,7 @@ export const forgotPassword = (email) => async (dispatch) => {
     dispatch(forgotPasswordRequest());
 
     const { data } = await axios.post(
-      `${server}/user/forgot-password`,
+      `${REACT_APP_BASE_URL}/user/forgot-password`,
       { email },
       { withCredentials: true }
     );
@@ -223,7 +223,7 @@ export const resetPassword = (token, password) => async (dispatch) => {
     dispatch(resetPasswordRequest());
 
     const { data } = await axios.put(
-      `${server}/user/reset-password/${token}`,
+      `${REACT_APP_BASE_URL}/user/reset-password/${token}`,
       { password },
       { withCredentials: true }
     );
@@ -241,7 +241,7 @@ export const resetPassword = (token, password) => async (dispatch) => {
 export const loadUser = () => async (dispatch) => {
   try {
     dispatch(loadUserRequest());
-    const { data } = await axios.get(`${server}/user/getuser`, {
+    const { data } = await axios.get(`${REACT_APP_BASE_URL}/user/getuser`, {
       withCredentials: true,
     });
     dispatch(loadUserSuccess(data.user));
@@ -277,7 +277,7 @@ export const updateUserInformation =
       dispatch(updateUserInfoRequest());
 
       const { data } = await axios.put(
-        `${server}/user/update-user-info`,
+        `${REACT_APP_BASE_URL}/user/update-user-info`,
         { email, password, phoneNumber, name },
         {
           withCredentials: true,
@@ -299,7 +299,7 @@ export const updateUserAddress =
       dispatch(updateUserAddressRequest());
 
       const { data } = await axios.put(
-        `${server}/user/update-user-addresses`,
+        `${REACT_APP_BASE_URL}/user/update-user-addresses`,
         { country, city, address1, address2, zipCode, addressType },
         { withCredentials: true }
       );
@@ -321,7 +321,7 @@ export const deleteUserAddress = (id) => async (dispatch) => {
     dispatch(deleteUserAddressRequest());
 
     const { data } = await axios.delete(
-      `${server}/user/delete-user-address/${id}`,
+      `${REACT_APP_BASE_URL}/user/delete-user-address/${id}`,
       { withCredentials: true }
     );
 
@@ -341,7 +341,7 @@ export const getAllUsers = () => async (dispatch) => {
   try {
     dispatch(getAllUsersRequest());
 
-    const { data } = await axios.get(`${server}/user/admin-all-users`, {
+    const { data } = await axios.get(`${REACT_APP_BASE_URL}/user/admin-all-users`, {
       withCredentials: true,
     });
 

@@ -80,7 +80,7 @@
 
 
 import axios from "axios";
-import { server } from "../../server";
+// import { server } from "../../server";
 import {
   getAllOrdersUserRequest,
   getAllOrdersUserSuccess,
@@ -98,7 +98,7 @@ export const getAllOrdersOfUser = (userId) => async (dispatch) => {
   try {
     dispatch(getAllOrdersUserRequest());
 
-    const { data } = await axios.get(`${server}/order/get-all-orders/${userId}`);
+    const { data } = await axios.get(`${REACT_APP_BASE_URL}/order/get-all-orders/${userId}`);
 
     dispatch(getAllOrdersUserSuccess(data.orders));
   } catch (error) {
@@ -112,7 +112,7 @@ export const getAllOrdersOfShop = (shopId) => async (dispatch) => {
     dispatch(getAllOrdersShopRequest());
 
     const { data } = await axios.get(
-      `${server}/order/get-seller-all-orders/${shopId}`
+      `${REACT_APP_BASE_URL}/order/get-seller-all-orders/${shopId}`
     );
 
     dispatch(getAllOrdersShopSuccess(data.orders));
@@ -126,7 +126,7 @@ export const getAllOrdersOfAdmin = () => async (dispatch) => {
   try {
     dispatch(adminAllOrdersRequest());
 
-    const { data } = await axios.get(`${server}/order/admin-all-orders`, {
+    const { data } = await axios.get(`${REACT_APP_BASE_URL}/order/admin-all-orders`, {
       withCredentials: true,
     });
 

@@ -36,7 +36,7 @@
 
 
 import axios from "axios";
-import { server } from "../../server";
+// import { server } from "../../server";
 import {
   shopForgotPasswordRequest,
   shopForgotPasswordSuccess,
@@ -58,7 +58,7 @@ export const shopForgotPassword = (email) => async (dispatch) => {
     dispatch(shopForgotPasswordRequest());
 
     const { data } = await axios.post(
-      `${server}/shop/shop-forgot-password`,
+      `${REACT_APP_BASE_URL}/shop/shop-forgot-password`,
       { email },
       { withCredentials: true }
     );
@@ -77,7 +77,7 @@ export const shopResetPassword = (token, password) => async (dispatch) => {
     dispatch(shopResetPasswordRequest());
 
     const { data } = await axios.put(
-      `${server}/shop/shop-reset-password/${token}`,
+      `${REACT_APP_BASE_URL}/shop/shop-reset-password/${token}`,
       { password },
       { withCredentials: true }
     );
@@ -96,7 +96,7 @@ export const getAllSellers = () => async (dispatch) => {
   try {
     dispatch(getAllSellersRequest());
 
-    const { data } = await axios.get(`${server}/shop/admin-all-sellers`, {
+    const { data } = await axios.get(`${REACT_APP_BASE_URL}/shop/admin-all-sellers`, {
       withCredentials: true,
     });
 
@@ -114,7 +114,7 @@ export const getAllSellers = () => async (dispatch) => {
 export const loadSeller = () => async (dispatch) => {
   try {
     dispatch(loadSellerRequest());
-    const { data } = await axios.get(`${server}/shop/getSeller`, {
+    const { data } = await axios.get(`${REACT_APP_BASE_URL}/shop/getSeller`, {
       withCredentials: true,
     });
     dispatch(loadSellerSuccess(data.seller));
