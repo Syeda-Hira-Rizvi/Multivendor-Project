@@ -4,7 +4,7 @@ import { BsFillBagFill } from "react-icons/bs";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrdersOfShop } from "../../redux/actions/order";
-import { server } from "../../server";
+// import { server } from "../../server";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -26,7 +26,7 @@ const OrderDetails = () => {
   const orderUpdateHandler = async (e) => {
     await axios
       .put(
-        `${server}/order/update-order-status/${id}`,
+        `${REACT_APP_BASE_URL}/order/update-order-status/${id}`,
         {
           status,
         },
@@ -44,7 +44,7 @@ const OrderDetails = () => {
   const refundOrderUpdateHandler = async (e) => {
     await axios
     .put(
-      `${server}/order/order-refund-success/${id}`,
+      `${REACT_APP_BASE_URL}/order/order-refund-success/${id}`,
       {
         status,
       },

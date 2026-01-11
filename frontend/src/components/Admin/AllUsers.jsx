@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 import styles from "../../styles/styles";
 import { RxCross1 } from "react-icons/rx";
 import axios from "axios";
-import { server } from "../../server";
+// import { server } from "../../server";
 import { toast } from "react-toastify";
 
 const AllUsers = () => {
@@ -23,7 +23,7 @@ const AllUsers = () => {
 
   const handleDelete = async (id) => {
     await axios
-    .delete(`${server}/user/delete-user/${id}`, { withCredentials: true })
+    .delete(`${REACT_APP_BASE_URL}/user/delete-user/${id}`, { withCredentials: true })
     .then((res) => {
       toast.success(res.data.message);
     });

@@ -8,7 +8,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getAllProductsShop } from "../../redux/actions/product";
-import { server } from "../../server";
+// import { server } from "../../server";
 import styles from "../../styles/styles";
 import {
   addToWishlist,
@@ -96,7 +96,7 @@ const ProductDetails = ({ data }) => {
       const userId = user._id;
       const sellerId = data.shop._id;
       await axios
-        .post(`${server}/conversation/create-new-conversation`, {
+        .post(`${REACT_APP_BASE_URL}/conversation/create-new-conversation`, {
           groupTitle,
           userId,
           sellerId,

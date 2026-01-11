@@ -77,7 +77,7 @@ export const sellerReducer = createReducer(initialState, (builder) => {
     })
     .addCase(shopForgotPasswordSuccess, (state, action) => {
       state.isLoading = false;
-      state.successMessage = action.payload; // server ka message
+      state.successMessage = action.payload; 
     })
     .addCase(shopForgotPasswordFail, (state, action) => {
       state.isLoading = false;

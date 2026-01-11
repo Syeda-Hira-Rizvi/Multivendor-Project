@@ -3,7 +3,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../styles/styles";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { server } from "../../server";
+// import { server } from "../../server";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -29,7 +29,7 @@ const Login = () => {
 
     await axios
       .post(
-        `${server}/user/login-user`,
+        `${REACT_APP_BASE_URL}/user/login-user`,
         {
           email,
           password,

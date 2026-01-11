@@ -3,7 +3,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../styles/styles";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { server } from "../../server";
+// import { server } from "../../server";
 import { toast } from "react-toastify";
 import { RxAvatar } from "react-icons/rx";
 
@@ -83,7 +83,7 @@ const ShopCreate = () => {
   try {
     setLoading(true); // ✅ start loading
 
-    const res = await axios.post(`${server}/shop/create-shop`, {
+    const res = await axios.post(`${REACT_APP_BASE_URL}/shop/create-shop`, {
       name,
       email,
       password,

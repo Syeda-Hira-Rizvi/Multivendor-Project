@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { server } from "../../server";
+// import { server } from "../../server";
 import { forgotPassword } from "../../redux/actions/user";
 import { toast } from "react-toastify";
 import styles from "../../styles/styles";

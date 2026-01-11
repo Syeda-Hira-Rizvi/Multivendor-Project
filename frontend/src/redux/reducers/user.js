@@ -128,7 +128,7 @@ export const userReducer = createReducer(initialState, (builder) => {
     })
     .addCase(forgotPasswordSuccess, (state, action) => {
       state.loading = false;
-      state.successMessage = action.payload; // server ka message
+      state.successMessage = action.payload; 
     })
     .addCase(forgotPasswordFail, (state, action) => {
       state.loading = false;

@@ -3,7 +3,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../styles/styles";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { server } from "../../server";
+// import { server } from "../../server";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { loadSeller } from "../../redux/actions/sellers";
@@ -32,7 +32,7 @@ const ShopLogin = () => {
 
     await axios
       .post(
-        `${server}/shop/login-shop`,
+        `${REACT_APP_BASE_URL}/shop/login-shop`,
         {
           email,
           password,

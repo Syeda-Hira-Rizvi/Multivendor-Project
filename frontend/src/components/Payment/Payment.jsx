@@ -12,7 +12,7 @@ import {
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { server } from "../../server";
+// import { server } from "../../server";
 import { toast } from "react-toastify";
 import { RxCross1 } from "react-icons/rx";
 
@@ -84,7 +84,7 @@ const Payment = () => {
     };
 
     await axios
-      .post(`${server}/order/create-order`, order, config)
+      .post(`${REACT_APP_BASE_URL}/order/create-order`, order, config)
       .then((res) => {
         setOpen(false);
         navigate("/order/success");
@@ -109,7 +109,7 @@ const Payment = () => {
       };
 
       const { data } = await axios.post(
-        `${server}/payment/process`,
+        `${REACT_APP_BASE_URL}/payment/process`,
         paymentData,
         config
       );
@@ -134,7 +134,7 @@ const Payment = () => {
           };
 
           await axios
-            .post(`${server}/order/create-order`, order, config)
+            .post(`${REACT_APP_BASE_URL}/order/create-order`, order, config)
             .then((res) => {
               setOpen(false);
               navigate("/order/success");
@@ -164,7 +164,7 @@ const Payment = () => {
     };
 
     await axios
-    .post(`${server}/order/create-order`, order, config)
+    .post(`${REACT_APP_BASE_URL}/order/create-order`, order, config)
     .then((res) => {
       setOpen(false);
       navigate("/order/success");

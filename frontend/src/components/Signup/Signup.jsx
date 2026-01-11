@@ -4,7 +4,7 @@ import styles from "../../styles/styles";
 import { Link } from "react-router-dom";
 import { RxAvatar } from "react-icons/rx";
 import axios from "axios";
-import { server } from "../../server";
+// import { server } from "../../server";
 import { toast } from "react-toastify";
 
 const Singup = () => {
@@ -64,7 +64,7 @@ const Singup = () => {
   try {
     setLoading(true); // ✅ Start Loading
 
-    const res = await axios.post(`${server}/user/create-user`, {
+    const res = await axios.post(`${REACT_APP_BASE_URL}/user/create-user`, {
       name,
       email,
       password,

@@ -4,12 +4,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {  AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { server } from "../../server";
+// import { server } from "../../server";
 
 const AllEvents = () => {
   const [events, setEvents] = useState([]);
   useEffect(() => {
-   axios.get(`${server}/event/admin-all-events`, {withCredentials: true}).then((res) =>{
+   axios.get(`${REACT_APP_BASE_URL}/event/admin-all-events`, {withCredentials: true}).then((res) =>{
     setEvents(res.data.events);
    })
   }, []);

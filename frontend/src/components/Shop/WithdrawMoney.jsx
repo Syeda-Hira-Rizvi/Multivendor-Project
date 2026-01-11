@@ -4,7 +4,7 @@ import { getAllOrdersOfShop } from "../../redux/actions/order";
 import styles from "../../styles/styles";
 import { RxCross1 } from "react-icons/rx";
 import axios from "axios";
-import { server } from "../../server";
+// import { server } from "../../server";
 import { toast } from "react-toastify";
 import { loadSeller } from "../../redux/actions/sellers";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -44,7 +44,7 @@ const WithdrawMoney = () => {
 
     await axios
       .put(
-        `${server}/shop/update-payment-methods`,
+        `${REACT_APP_BASE_URL}/shop/update-payment-methods`,
         {
           withdrawMethod,
         },
@@ -69,7 +69,7 @@ const WithdrawMoney = () => {
 
   const deleteHandler = async () => {
     await axios
-      .delete(`${server}/shop/delete-withdraw-method`, {
+      .delete(`${REACT_APP_BASE_URL}/shop/delete-withdraw-method`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -89,7 +89,7 @@ const WithdrawMoney = () => {
       const amount = withdrawAmount;
       await axios
         .post(
-          `${server}/withdraw/create-withdraw-request`,
+          `${REACT_APP_BASE_URL}/withdraw/create-withdraw-request`,
           { amount },
           { withCredentials: true }
         )

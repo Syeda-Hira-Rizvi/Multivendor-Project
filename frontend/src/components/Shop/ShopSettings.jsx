@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { backend_url, server } from "../../server";
+// import { backend_url, server } from "../../server";
 import { AiOutlineCamera } from "react-icons/ai";
 import styles from "../../styles/styles";
 import axios from "axios";
@@ -28,7 +28,7 @@ const ShopSettings = () => {
         setAvatar(reader.result);
         axios
           .put(
-            `${server}/shop/update-shop-avatar`,
+            `${REACT_APP_BASE_URL}/shop/update-shop-avatar`,
             { avatar: reader.result },
             {
               withCredentials: true,
@@ -52,7 +52,7 @@ const ShopSettings = () => {
 
     await axios
       .put(
-        `${server}/shop/update-seller-info`,
+        `${REACT_APP_BASE_URL}/shop/update-seller-info`,
         {
           name,
           address,
