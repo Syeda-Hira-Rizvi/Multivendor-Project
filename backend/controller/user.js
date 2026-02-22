@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
-const { server } = require("../../frontend/src/server");
+// const { server } = require("../../frontend/src/server");
 
 // create user
 router.post("/create-user", async (req, res, next) => {
