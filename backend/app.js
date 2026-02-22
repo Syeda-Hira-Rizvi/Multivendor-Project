@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 app.use(cors({
-  origin:'http://localhost:3000',
+  origin: ['http://localhost:3000', 'https://multivendor-project.vercel.app'],
   credentials: true
 }));
 
@@ -25,6 +25,10 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
     path: "config/.env",
   });
 }
+
+app.get("/", (req, res) => {
+  res.send("<h1>Hello From Node Server via nodemon</h1>");
+});
 
 // import routes
 const user = require("./controller/user");
