@@ -39,7 +39,7 @@ router.post("/create-shop", catchAsyncErrors(async (req, res, next) => {
 
     const activationToken = createActivationToken(seller);
 
-    const activationUrl = `http://localhost:3000/seller/activation/${activationToken}`;
+    const activationUrl = `https://multivendor-project.vercel.app/seller/activation/${activationToken}`;
 
     try {
       await sendMail({
@@ -157,7 +157,7 @@ router.post(
       await shop.save({ validateBeforeSave: false });
 
       // 3) Reset URL (frontend shop reset page)
-      const resetUrl = `http://localhost:3000/shop-reset-password/${resetToken}`;
+      const resetUrl = `https://multivendor-project.vercel.app/shop-reset-password/${resetToken}`;
 
       // 4) Email message
       const message = `You requested a password reset.\n\nPlease click the link below to reset your password:\n${resetUrl}\n\nIf you didn't request this, please ignore it.`;

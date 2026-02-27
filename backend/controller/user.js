@@ -36,7 +36,7 @@ router.post("/create-user", async (req, res, next) => {
 
     const activationToken = createActivationToken(user);
 
-    const activationUrl = `http://localhost:3000/activation/${activationToken}`;
+    const activationUrl = `https://multivendor-project.vercel.app/activation/${activationToken}`;
 
     try {
       await sendMail({
@@ -153,7 +153,7 @@ router.post(
       // const resetUrl = `${req.protocol}://${req.get(
       //   "host"
       // )}/reset-password/${resetToken}`;
-       const resetUrl =`http://localhost:3000/reset-password/${resetToken}`;
+       const resetUrl =`https://multivendor-project.vercel.app/reset-password/${resetToken}`;
 
       // 4) Email ka message
       const message = `You requested a password reset.\n\nPlease click on the link to reset your password:\n${resetUrl}\n\nIf you didn't request this, please ignore.`;
